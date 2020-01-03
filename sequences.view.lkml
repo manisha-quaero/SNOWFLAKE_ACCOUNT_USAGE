@@ -1,15 +1,9 @@
 view: sequences {
-  sql_table_name: ACCOUNT_USAGE.SEQUENCES ;;
-
-  dimension: sequence_id {
-    primary_key: yes
-    type: number
-    sql: ${TABLE}."SEQUENCE_ID" ;;
-  }
+  sql_table_name: SNOWFLAKE.ACCOUNT_USAGE.SEQUENCES ;;
 
   dimension: comment {
     type: string
-    sql: ${TABLE}."COMMENT" ;;
+    sql: ${TABLE}.COMMENT ;;
   }
 
   dimension_group: created {
@@ -23,17 +17,17 @@ view: sequences {
       quarter,
       year
     ]
-    sql: ${TABLE}."CREATED" ;;
+    sql: ${TABLE}.CREATED ;;
   }
 
   dimension: cycle_option {
-    type: string
-    sql: ${TABLE}."CYCLE_OPTION" ;;
+    type: yesno
+    sql: ${TABLE}.CYCLE_OPTION ;;
   }
 
   dimension: data_type {
     type: string
-    sql: ${TABLE}."DATA_TYPE" ;;
+    sql: ${TABLE}.DATA_TYPE ;;
   }
 
   dimension_group: deleted {
@@ -47,12 +41,12 @@ view: sequences {
       quarter,
       year
     ]
-    sql: ${TABLE}."DELETED" ;;
+    sql: ${TABLE}.DELETED ;;
   }
 
   dimension: increment {
     type: string
-    sql: ${TABLE}."INCREMENT" ;;
+    sql: ${TABLE}.increment ;;
   }
 
   dimension_group: last_altered {
@@ -66,76 +60,66 @@ view: sequences {
       quarter,
       year
     ]
-    sql: ${TABLE}."LAST_ALTERED" ;;
+    sql: ${TABLE}.LAST_ALTERED ;;
   }
 
   dimension: maximum_value {
-    type: string
-    sql: ${TABLE}."MAXIMUM_VALUE" ;;
+    type: number
+    sql: ${TABLE}.MAXIMUM_VALUE ;;
   }
 
   dimension: minimum_value {
-    type: string
-    sql: ${TABLE}."MINIMUM_VALUE" ;;
+    type: number
+    sql: ${TABLE}.MINIMUM_VALUE ;;
   }
 
   dimension: next_value {
     type: string
-    sql: ${TABLE}."NEXT_VALUE" ;;
+    sql: ${TABLE}.NEXT_VALUE ;;
   }
 
   dimension: numeric_precision {
     type: number
-    sql: ${TABLE}."NUMERIC_PRECISION" ;;
+    sql: ${TABLE}.NUMERIC_PRECISION ;;
   }
 
   dimension: numeric_precision_radix {
     type: number
-    sql: ${TABLE}."NUMERIC_PRECISION_RADIX" ;;
+    sql: ${TABLE}.NUMERIC_PRECISION_RADIX ;;
   }
 
   dimension: numeric_scale {
     type: number
-    sql: ${TABLE}."NUMERIC_SCALE" ;;
+    sql: ${TABLE}.NUMERIC_SCALE ;;
   }
 
   dimension: sequence_catalog {
     type: string
-    sql: ${TABLE}."SEQUENCE_CATALOG" ;;
-  }
-
-  dimension: sequence_catalog_id {
-    type: number
-    sql: ${TABLE}."SEQUENCE_CATALOG_ID" ;;
+    sql: ${TABLE}.SEQUENCE_CATALOG ;;
   }
 
   dimension: sequence_name {
     type: string
-    sql: ${TABLE}."SEQUENCE_NAME" ;;
+    sql: ${TABLE}.SEQUENCE_NAME ;;
   }
 
   dimension: sequence_owner {
     type: string
-    sql: ${TABLE}."SEQUENCE_OWNER" ;;
+    sql: ${TABLE}.SEQUENCE_OWNER ;;
   }
 
   dimension: sequence_schema {
     type: string
-    sql: ${TABLE}."SEQUENCE_SCHEMA" ;;
-  }
-
-  dimension: sequence_schema_id {
-    type: number
-    sql: ${TABLE}."SEQUENCE_SCHEMA_ID" ;;
+    sql: ${TABLE}.SEQUENCE_SCHEMA ;;
   }
 
   dimension: start_value {
-    type: string
-    sql: ${TABLE}."START_VALUE" ;;
+    type: number
+    sql: ${TABLE}.START_VALUE ;;
   }
 
   measure: count {
     type: count
-    drill_fields: [sequence_id, sequence_name]
+    drill_fields: [sequence_name]
   }
 }

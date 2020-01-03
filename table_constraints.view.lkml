@@ -1,44 +1,29 @@
 view: table_constraints {
-  sql_table_name: ACCOUNT_USAGE.TABLE_CONSTRAINTS ;;
+  sql_table_name: SNOWFLAKE.ACCOUNT_USAGE.TABLE_CONSTRAINTS ;;
 
   dimension: comment {
     type: string
-    sql: ${TABLE}."COMMENT" ;;
+    sql: ${TABLE}.COMMENT ;;
   }
 
   dimension: constraint_catalog {
     type: string
-    sql: ${TABLE}."CONSTRAINT_CATALOG" ;;
-  }
-
-  dimension: constraint_catalog_id {
-    type: number
-    sql: ${TABLE}."CONSTRAINT_CATALOG_ID" ;;
-  }
-
-  dimension: constraint_id {
-    type: number
-    sql: ${TABLE}."CONSTRAINT_ID" ;;
+    sql: ${TABLE}.CONSTRAINT_CATALOG ;;
   }
 
   dimension: constraint_name {
     type: string
-    sql: ${TABLE}."CONSTRAINT_NAME" ;;
+    sql: ${TABLE}.CONSTRAINT_NAME ;;
   }
 
   dimension: constraint_schema {
     type: string
-    sql: ${TABLE}."CONSTRAINT_SCHEMA" ;;
-  }
-
-  dimension: constraint_schema_id {
-    type: number
-    sql: ${TABLE}."CONSTRAINT_SCHEMA_ID" ;;
+    sql: ${TABLE}.CONSTRAINT_SCHEMA ;;
   }
 
   dimension: constraint_type {
     type: string
-    sql: ${TABLE}."CONSTRAINT_TYPE" ;;
+    sql: ${TABLE}.CONSTRAINT_TYPE ;;
   }
 
   dimension_group: created {
@@ -52,7 +37,7 @@ view: table_constraints {
       quarter,
       year
     ]
-    sql: ${TABLE}."CREATED" ;;
+    sql: ${TABLE}.CREATED ;;
   }
 
   dimension_group: deleted {
@@ -66,22 +51,22 @@ view: table_constraints {
       quarter,
       year
     ]
-    sql: ${TABLE}."DELETED" ;;
+    sql: ${TABLE}.DELETED ;;
   }
 
   dimension: enforced {
-    type: string
-    sql: ${TABLE}."ENFORCED" ;;
+    type: yesno
+    sql: ${TABLE}.ENFORCED ;;
   }
 
   dimension: initially_deferred {
-    type: string
-    sql: ${TABLE}."INITIALLY_DEFERRED" ;;
+    type: yesno
+    sql: CASE WHEN ${TABLE}.INITIALLY_DEFERRED = 'YES' THEN TRUE ELSE FALSE END ;;
   }
 
   dimension: is_deferrable {
-    type: string
-    sql: ${TABLE}."IS_DEFERRABLE" ;;
+    type: yesno
+    sql: CASE WHEN ${TABLE}.IS_DEFERRABLE = 'YES' THEN TRUE ELSE FALSE END ;;
   }
 
   dimension_group: last_altered {
@@ -95,54 +80,26 @@ view: table_constraints {
       quarter,
       year
     ]
-    sql: ${TABLE}."LAST_ALTERED" ;;
+    sql: ${TABLE}.LAST_ALTERED ;;
   }
 
   dimension: table_catalog {
     type: string
-    sql: ${TABLE}."TABLE_CATALOG" ;;
-  }
-
-  dimension: table_catalog_id {
-    type: number
-    sql: ${TABLE}."TABLE_CATALOG_ID" ;;
-  }
-
-  dimension: table_id {
-    type: number
-    # hidden: yes
-    sql: ${TABLE}."TABLE_ID" ;;
+    sql: ${TABLE}.TABLE_CATALOG ;;
   }
 
   dimension: table_name {
     type: string
-    sql: ${TABLE}."TABLE_NAME" ;;
+    sql: ${TABLE}.TABLE_NAME ;;
   }
 
   dimension: table_schema {
     type: string
-    sql: ${TABLE}."TABLE_SCHEMA" ;;
-  }
-
-  dimension: table_schema_id {
-    type: number
-    sql: ${TABLE}."TABLE_SCHEMA_ID" ;;
+    sql: ${TABLE}.TABLE_SCHEMA ;;
   }
 
   measure: count {
     type: count
-    drill_fields: [detail*]
-  }
-
-  # ----- Sets of fields for drilling ------
-  set: detail {
-    fields: [
-      constraint_name,
-      table_name,
-      tables.table_id,
-      tables.table_name,
-      tables.self_referencing_column_name,
-      tables.user_defined_type_name
-    ]
+    drill_fields: [constraint_name, table_name]
   }
 }

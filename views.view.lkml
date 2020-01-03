@@ -1,14 +1,14 @@
 view: views {
-  sql_table_name: ACCOUNT_USAGE.VIEWS ;;
+  sql_table_name: SNOWFLAKE.ACCOUNT_USAGE.VIEWS ;;
 
   dimension: check_option {
     type: string
-    sql: ${TABLE}."CHECK_OPTION" ;;
+    sql: ${TABLE}.CHECK_OPTION ;;
   }
 
   dimension: comment {
     type: string
-    sql: ${TABLE}."COMMENT" ;;
+    sql: ${TABLE}.COMMENT ;;
   }
 
   dimension_group: created {
@@ -22,7 +22,7 @@ view: views {
       quarter,
       year
     ]
-    sql: ${TABLE}."CREATED" ;;
+    sql: ${TABLE}.CREATED ;;
   }
 
   dimension_group: deleted {
@@ -36,22 +36,22 @@ view: views {
       quarter,
       year
     ]
-    sql: ${TABLE}."DELETED" ;;
+    sql: ${TABLE}.DELETED ;;
   }
 
   dimension: insertable_into {
-    type: string
-    sql: ${TABLE}."INSERTABLE_INTO" ;;
+    type: yesno
+    sql: CASE WHEN ${TABLE}.INSERTABLE_INTO = 'YES' THEN TRUE ELSE FALSE END ;;
   }
 
   dimension: is_secure {
-    type: string
-    sql: ${TABLE}."IS_SECURE" ;;
+    type: yesno
+    sql: CASE WHEN ${TABLE}.IS_SECURE = 'YES' THEN TRUE ELSE FALSE END ;;
   }
 
   dimension: is_updatable {
-    type: string
-    sql: ${TABLE}."IS_UPDATABLE" ;;
+    type: yesno
+    sql: CASE WHEN ${TABLE}.IS_UPDATABLE = 'YES' THEN TRUE ELSE FALSE END ;;
   }
 
   dimension_group: last_altered {
@@ -65,52 +65,36 @@ view: views {
       quarter,
       year
     ]
-    sql: ${TABLE}."LAST_ALTERED" ;;
+    sql: ${TABLE}.LAST_ALTERED ;;
   }
 
   dimension: table_catalog {
     type: string
-    sql: ${TABLE}."TABLE_CATALOG" ;;
-  }
-
-  dimension: table_catalog_id {
-    type: number
-    sql: ${TABLE}."TABLE_CATALOG_ID" ;;
-  }
-
-  dimension: table_id {
-    type: number
-    # hidden: yes
-    sql: ${TABLE}."TABLE_ID" ;;
+    sql: ${TABLE}.TABLE_CATALOG ;;
   }
 
   dimension: table_name {
     type: string
-    sql: ${TABLE}."TABLE_NAME" ;;
+    sql: ${TABLE}.TABLE_NAME ;;
   }
 
   dimension: table_owner {
     type: string
-    sql: ${TABLE}."TABLE_OWNER" ;;
+    sql: ${TABLE}.TABLE_OWNER ;;
   }
 
   dimension: table_schema {
     type: string
-    sql: ${TABLE}."TABLE_SCHEMA" ;;
-  }
-
-  dimension: table_schema_id {
-    type: number
-    sql: ${TABLE}."TABLE_SCHEMA_ID" ;;
+    sql: ${TABLE}.TABLE_SCHEMA ;;
   }
 
   dimension: view_definition {
     type: string
-    sql: ${TABLE}."VIEW_DEFINITION" ;;
+    sql: ${TABLE}.VIEW_DEFINITION ;;
   }
 
   measure: count {
     type: count
-    drill_fields: [table_name, tables.table_id, tables.table_name, tables.self_referencing_column_name, tables.user_defined_type_name]
+    drill_fields: [table_name]
   }
 }

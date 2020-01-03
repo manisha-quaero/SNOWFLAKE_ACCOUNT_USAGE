@@ -1,15 +1,20 @@
 view: table_storage_metrics {
-  sql_table_name: ACCOUNT_USAGE.TABLE_STORAGE_METRICS ;;
+  sql_table_name: SNOWFLAKE.ACCOUNT_USAGE.TABLE_STORAGE_METRICS ;;
 
-  dimension: id {
-    primary_key: yes
-    type: number
-    sql: ${TABLE}."ID" ;;
-  }
+#   dimension: id {
+#     primary_key: yes
+#     type: number
+#     sql: ${TABLE}.ID ;;
+#   }
 
   dimension: active_bytes {
-    type: number
-    sql: ${TABLE}."ACTIVE_BYTES" ;;
+    type: string
+    sql: ${TABLE}.ACTIVE_BYTES ;;
+  }
+
+  dimension: active_rows {
+    type: string
+    sql: ${TABLE}.ACTIVE_ROWS ;;
   }
 
   dimension_group: catalog_created {
@@ -23,7 +28,7 @@ view: table_storage_metrics {
       quarter,
       year
     ]
-    sql: ${TABLE}."CATALOG_CREATED" ;;
+    sql: ${TABLE}.CATALOG_CREATED ;;
   }
 
   dimension_group: catalog_dropped {
@@ -37,37 +42,32 @@ view: table_storage_metrics {
       quarter,
       year
     ]
-    sql: ${TABLE}."CATALOG_DROPPED" ;;
+    sql: ${TABLE}.CATALOG_DROPPED ;;
   }
 
   dimension: clone_group_id {
     type: number
-    sql: ${TABLE}."CLONE_GROUP_ID" ;;
+    sql: ${TABLE}.CLONE_GROUP_ID ;;
   }
 
   dimension: comment {
     type: string
-    sql: ${TABLE}."COMMENT" ;;
-  }
-
-  dimension: deleted {
-    type: yesno
-    sql: ${TABLE}."DELETED" ;;
+    sql: ${TABLE}.COMMENT ;;
   }
 
   dimension: failsafe_bytes {
-    type: number
-    sql: ${TABLE}."FAILSAFE_BYTES" ;;
+    type: string
+    sql: ${TABLE}.FAILSAFE_BYTES ;;
   }
 
   dimension: is_transient {
-    type: string
-    sql: ${TABLE}."IS_TRANSIENT" ;;
+    type: yesno
+    sql: CASE WHEN ${TABLE}.IS_TRANSIENT = 'YES' THEN TRUE ELSE FALSE END ;;
   }
 
-  dimension: retained_for_clone_bytes {
+  dimension: owned_active_and_time_travel_bytes {
     type: number
-    sql: ${TABLE}."RETAINED_FOR_CLONE_BYTES" ;;
+    sql: ${TABLE}.OWNED_ACTIVE_AND_TIME_TRAVEL_BYTES ;;
   }
 
   dimension_group: schema_created {
@@ -81,7 +81,7 @@ view: table_storage_metrics {
       quarter,
       year
     ]
-    sql: ${TABLE}."SCHEMA_CREATED" ;;
+    sql: ${TABLE}.SCHEMA_CREATED ;;
   }
 
   dimension_group: schema_dropped {
@@ -95,17 +95,13 @@ view: table_storage_metrics {
       quarter,
       year
     ]
-    sql: ${TABLE}."SCHEMA_DROPPED" ;;
+    sql: ${TABLE}.SCHEMA_DROPPED ;;
   }
+
 
   dimension: table_catalog {
     type: string
-    sql: ${TABLE}."TABLE_CATALOG" ;;
-  }
-
-  dimension: table_catalog_id {
-    type: number
-    sql: ${TABLE}."TABLE_CATALOG_ID" ;;
+    sql: ${TABLE}.TABLE_CATALOG ;;
   }
 
   dimension_group: table_created {
@@ -119,7 +115,7 @@ view: table_storage_metrics {
       quarter,
       year
     ]
-    sql: ${TABLE}."TABLE_CREATED" ;;
+    sql: ${TABLE}.TABLE_CREATED ;;
   }
 
   dimension_group: table_dropped {
@@ -133,7 +129,7 @@ view: table_storage_metrics {
       quarter,
       year
     ]
-    sql: ${TABLE}."TABLE_DROPPED" ;;
+    sql: ${TABLE}.TABLE_DROPPED ;;
   }
 
   dimension_group: table_entered_failsafe {
@@ -147,31 +143,26 @@ view: table_storage_metrics {
       quarter,
       year
     ]
-    sql: ${TABLE}."TABLE_ENTERED_FAILSAFE" ;;
+    sql: ${TABLE}.TABLE_ENTERED_FAILSAFE ;;
   }
 
   dimension: table_name {
     type: string
-    sql: ${TABLE}."TABLE_NAME" ;;
+    sql: ${TABLE}.TABLE_NAME ;;
   }
 
   dimension: table_schema {
     type: string
-    sql: ${TABLE}."TABLE_SCHEMA" ;;
-  }
-
-  dimension: table_schema_id {
-    type: number
-    sql: ${TABLE}."TABLE_SCHEMA_ID" ;;
+    sql: ${TABLE}.TABLE_SCHEMA ;;
   }
 
   dimension: time_travel_bytes {
     type: number
-    sql: ${TABLE}."TIME_TRAVEL_BYTES" ;;
+    sql: ${TABLE}.TIME_TRAVEL_BYTES ;;
   }
 
   measure: count {
     type: count
-    drill_fields: [id, table_name]
+    drill_fields: [table_name]
   }
 }

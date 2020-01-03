@@ -1,34 +1,29 @@
 view: referential_constraints {
-  sql_table_name: ACCOUNT_USAGE.REFERENTIAL_CONSTRAINTS ;;
+  sql_table_name: SNOWFLAKE.ACCOUNT_USAGE.REFERENTIAL_CONSTRAINTS ;;
 
   dimension: comment {
     type: string
-    sql: ${TABLE}."COMMENT" ;;
+    sql: ${TABLE}.COMMENT ;;
   }
 
   dimension: constraint_catalog {
     type: string
-    sql: ${TABLE}."CONSTRAINT_CATALOG" ;;
-  }
-
-  dimension: constraint_catalog_id {
-    type: number
-    sql: ${TABLE}."CONSTRAINT_CATALOG_ID" ;;
+    sql: ${TABLE}.CONSTRAINT_CATALOG ;;
   }
 
   dimension: constraint_name {
     type: string
-    sql: ${TABLE}."CONSTRAINT_NAME" ;;
+    sql: ${TABLE}.CONSTRAINT_NAME ;;
   }
 
   dimension: constraint_schema {
     type: string
-    sql: ${TABLE}."CONSTRAINT_SCHEMA" ;;
+    sql: ${TABLE}.CONSTRAINT_SCHEMA ;;
   }
 
-  dimension: constraint_schema_id {
-    type: number
-    sql: ${TABLE}."CONSTRAINT_SCHEMA_ID" ;;
+  dimension: constraint_table {
+    type: string
+    sql: ${TABLE}.CONSTRAINT_TABLE ;;
   }
 
   dimension_group: created {
@@ -42,12 +37,12 @@ view: referential_constraints {
       quarter,
       year
     ]
-    sql: ${TABLE}."CREATED" ;;
+    sql: ${TABLE}.CREATED ;;
   }
 
   dimension: delete_rule {
     type: string
-    sql: ${TABLE}."DELETE_RULE" ;;
+    sql: ${TABLE}.DELETE_RULE ;;
   }
 
   dimension_group: deleted {
@@ -61,7 +56,7 @@ view: referential_constraints {
       quarter,
       year
     ]
-    sql: ${TABLE}."DELETED" ;;
+    sql: ${TABLE}.DELETED ;;
   }
 
   dimension_group: last_altered {
@@ -75,42 +70,37 @@ view: referential_constraints {
       quarter,
       year
     ]
-    sql: ${TABLE}."LAST_ALTERED" ;;
+    sql: ${TABLE}.LAST_ALTERED_AT ;;
   }
 
   dimension: match_option {
     type: string
-    sql: ${TABLE}."MATCH_OPTION" ;;
+    sql: ${TABLE}.MATCH_OPTION ;;
   }
 
   dimension: unique_constraint_catalog {
     type: string
-    sql: ${TABLE}."UNIQUE_CONSTRAINT_CATALOG" ;;
-  }
-
-  dimension: unique_constraint_catalog_id {
-    type: number
-    sql: ${TABLE}."UNIQUE_CONSTRAINT_CATALOG_ID" ;;
+    sql: ${TABLE}.UNIQUE_CONSTRAINT_CATALOG ;;
   }
 
   dimension: unique_constraint_name {
     type: string
-    sql: ${TABLE}."UNIQUE_CONSTRAINT_NAME" ;;
+    sql: ${TABLE}.UNIQUE_CONSTRAINT_NAME ;;
   }
 
   dimension: unique_constraint_schema {
     type: string
-    sql: ${TABLE}."UNIQUE_CONSTRAINT_SCHEMA" ;;
+    sql: ${TABLE}.UNIQUE_CONSTRAINT_SCHEMA ;;
   }
 
-  dimension: unique_constraint_schema_id {
-    type: number
-    sql: ${TABLE}."UNIQUE_CONSTRAINT_SCHEMA_ID" ;;
+  dimension: unique_constraint_table {
+    type: string
+    sql: ${TABLE}.UNIQUE_CONSTRAINT_TABLE ;;
   }
 
   dimension: update_rule {
     type: string
-    sql: ${TABLE}."UPDATE_RULE" ;;
+    sql: ${TABLE}.UPDATE_RULE ;;
   }
 
   measure: count {

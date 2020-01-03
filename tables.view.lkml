@@ -1,35 +1,30 @@
 view: tables {
-  sql_table_name: ACCOUNT_USAGE.TABLES ;;
+  sql_table_name: SNOWFLAKE.ACCOUNT_USAGE.TABLES ;;
 
-  dimension: table_id {
+  dimension: id {
     primary_key: yes
     type: number
-    sql: ${TABLE}."TABLE_ID" ;;
-  }
-
-  dimension: auto_clustering_on {
-    type: string
-    sql: ${TABLE}."AUTO_CLUSTERING_ON" ;;
+    sql: ${TABLE}.table_id ;;
   }
 
   dimension: bytes {
-    type: number
-    sql: ${TABLE}."BYTES" ;;
+    type: string
+    sql: ${TABLE}.BYTES ;;
   }
 
   dimension: clustering_key {
     type: string
-    sql: ${TABLE}."CLUSTERING_KEY" ;;
+    sql: ${TABLE}.CLUSTERING_KEY ;;
   }
 
   dimension: comment {
     type: string
-    sql: ${TABLE}."COMMENT" ;;
+    sql: ${TABLE}.COMMENT ;;
   }
 
   dimension: commit_action {
     type: string
-    sql: ${TABLE}."COMMIT_ACTION" ;;
+    sql: ${TABLE}.COMMIT_ACTION ;;
   }
 
   dimension_group: created {
@@ -43,7 +38,7 @@ view: tables {
       quarter,
       year
     ]
-    sql: ${TABLE}."CREATED" ;;
+    sql: ${TABLE}.CREATED ;;
   }
 
   dimension_group: deleted {
@@ -57,22 +52,22 @@ view: tables {
       quarter,
       year
     ]
-    sql: ${TABLE}."DELETED" ;;
+    sql: ${TABLE}.DELETED ;;
   }
 
   dimension: is_insertable_into {
-    type: string
-    sql: ${TABLE}."IS_INSERTABLE_INTO" ;;
+    type: yesno
+    sql: CASE WHEN ${TABLE}.IS_INSERTABLE_INTO = 'YES' THEN TRUE ELSE FALSE END ;;
   }
 
   dimension: is_transient {
-    type: string
-    sql: ${TABLE}."IS_TRANSIENT" ;;
+    type: yesno
+    sql: CASE WHEN ${TABLE}.IS_TRANSIENT = 'YES' THEN TRUE ELSE FALSE END ;;
   }
 
   dimension: is_typed {
-    type: string
-    sql: ${TABLE}."IS_TYPED" ;;
+    type: yesno
+    sql: CASE WHEN ${TABLE}.IS_TYPED = 'YES' THEN TRUE ELSE FALSE END ;;
   }
 
   dimension_group: last_altered {
@@ -86,98 +81,69 @@ view: tables {
       quarter,
       year
     ]
-    sql: ${TABLE}."LAST_ALTERED" ;;
+    sql: ${TABLE}.LAST_ALTERED ;;
   }
 
   dimension: reference_generation {
     type: string
-    sql: ${TABLE}."REFERENCE_GENERATION" ;;
-  }
-
-  dimension: retention_time {
-    type: number
-    sql: ${TABLE}."RETENTION_TIME" ;;
+    sql: ${TABLE}.REFERENCE_GENERATION ;;
   }
 
   dimension: row_count {
-    type: number
-    sql: ${TABLE}."ROW_COUNT" ;;
+    type: string
+    sql: ${TABLE}.ROW_COUNT ;;
   }
 
   dimension: self_referencing_column_name {
     type: string
-    sql: ${TABLE}."SELF_REFERENCING_COLUMN_NAME" ;;
+    sql: ${TABLE}.SELF_REFERENCING_COLUMN_NAME ;;
   }
 
   dimension: table_catalog {
     type: string
-    sql: ${TABLE}."TABLE_CATALOG" ;;
-  }
-
-  dimension: table_catalog_id {
-    type: number
-    sql: ${TABLE}."TABLE_CATALOG_ID" ;;
+    sql: ${TABLE}.TABLE_CATALOG ;;
   }
 
   dimension: table_name {
     type: string
-    sql: ${TABLE}."TABLE_NAME" ;;
+    sql: ${TABLE}.TABLE_NAME ;;
   }
 
   dimension: table_owner {
     type: string
-    sql: ${TABLE}."TABLE_OWNER" ;;
+    sql: ${TABLE}.TABLE_OWNER ;;
   }
 
   dimension: table_schema {
     type: string
-    sql: ${TABLE}."TABLE_SCHEMA" ;;
-  }
-
-  dimension: table_schema_id {
-    type: number
-    sql: ${TABLE}."TABLE_SCHEMA_ID" ;;
+    sql: ${TABLE}.TABLE_SCHEMA ;;
   }
 
   dimension: table_type {
     type: string
-    sql: ${TABLE}."TABLE_TYPE" ;;
+    sql: ${TABLE}.TABLE_TYPE ;;
   }
 
-  dimension: user_defined_type_catalog {
+  dimension: user_defind_type_name {
     type: string
-    sql: ${TABLE}."USER_DEFINED_TYPE_CATALOG" ;;
+    sql: ${TABLE}.USER_DEFIND_TYPE_NAME ;;
   }
 
-  dimension: user_defined_type_name {
+  dimension: user_defined_catalog_type {
     type: string
-    sql: ${TABLE}."USER_DEFINED_TYPE_NAME" ;;
+    sql: ${TABLE}.USER_DEFINED_CATALOG_TYPE ;;
   }
 
-  dimension: user_defined_type_schema {
+  dimension: user_defined_schema_type {
     type: string
-    sql: ${TABLE}."USER_DEFINED_TYPE_SCHEMA" ;;
+    sql: ${TABLE}.USER_DEFINED_SCHEMA_TYPE ;;
   }
 
   measure: count {
     type: count
-    drill_fields: [detail*]
-  }
-
-  # ----- Sets of fields for drilling ------
-  set: detail {
-    fields: [
-      table_id,
+    drill_fields: [#id,
       table_name,
       self_referencing_column_name,
-      user_defined_type_name,
-      automatic_clustering_history.count,
-      columns.count,
-      copy_history.count,
-      load_history.count,
-      materialized_view_refresh_history.count,
-      table_constraints.count,
-      views.count
-    ]
+      user_defind_type_name]
   }
 }

@@ -1,25 +1,19 @@
 view: file_formats {
-  sql_table_name: ACCOUNT_USAGE.FILE_FORMATS ;;
-
-  dimension: file_format_id {
-    primary_key: yes
-    type: number
-    sql: ${TABLE}."FILE_FORMAT_ID" ;;
-  }
+  sql_table_name: SNOWFLAKE.ACCOUNT_USAGE.FILE_FORMATS ;;
 
   dimension: binary_format {
     type: string
-    sql: ${TABLE}."BINARY_FORMAT" ;;
+    sql: ${TABLE}.BINARY_FORMAT ;;
   }
 
   dimension: comment {
     type: string
-    sql: ${TABLE}."COMMENT" ;;
+    sql: ${TABLE}.COMMENT ;;
   }
 
   dimension: compression {
     type: string
-    sql: ${TABLE}."COMPRESSION" ;;
+    sql: ${TABLE}.COMPRESSION ;;
   }
 
   dimension_group: created {
@@ -33,12 +27,12 @@ view: file_formats {
       quarter,
       year
     ]
-    sql: ${TABLE}."CREATED" ;;
+    sql: ${TABLE}.CREATED ;;
   }
 
   dimension: date_format {
     type: string
-    sql: ${TABLE}."DATE_FORMAT" ;;
+    sql: ${TABLE}.DATE_FORMAT ;;
   }
 
   dimension_group: deleted {
@@ -52,67 +46,57 @@ view: file_formats {
       quarter,
       year
     ]
-    sql: ${TABLE}."DELETED" ;;
+    sql: ${TABLE}.DELETED ;;
   }
 
   dimension: error_on_column_count_mismatch {
-    type: yesno
-    sql: ${TABLE}."ERROR_ON_COLUMN_COUNT_MISMATCH" ;;
+    type: string
+    sql: ${TABLE}.ERROR_ON_COLUMN_COUNT_MISMATCH ;;
   }
 
   dimension: escape {
     type: string
-    sql: ${TABLE}."ESCAPE" ;;
+    sql: ${TABLE}.ESCAPE ;;
   }
 
   dimension: escape_unenclosed_field {
     type: string
-    sql: ${TABLE}."ESCAPE_UNENCLOSED_FIELD" ;;
+    sql: ${TABLE}.ESCAPE_UNENCLOSED_FIELD ;;
   }
 
   dimension: field_delimiter {
     type: string
-    sql: ${TABLE}."FIELD_DELIMITER" ;;
+    sql: ${TABLE}.FIELD_DELIMITER ;;
   }
 
   dimension: field_optionally_enclosed_by {
     type: string
-    sql: ${TABLE}."FIELD_OPTIONALLY_ENCLOSED_BY" ;;
+    sql: ${TABLE}.FIELD_OPTIONALLY_ENCLOSED_BY ;;
   }
 
   dimension: file_format_catalog {
     type: string
-    sql: ${TABLE}."FILE_FORMAT_CATALOG" ;;
-  }
-
-  dimension: file_format_catalog_id {
-    type: number
-    sql: ${TABLE}."FILE_FORMAT_CATALOG_ID" ;;
+    sql: ${TABLE}.FILE_FORMAT_CATALOG ;;
   }
 
   dimension: file_format_name {
     type: string
-    sql: ${TABLE}."FILE_FORMAT_NAME" ;;
+    sql: ${TABLE}.FILE_FORMAT_NAME ;;
   }
 
   dimension: file_format_owner {
     type: string
-    sql: ${TABLE}."FILE_FORMAT_OWNER" ;;
+    sql: ${TABLE}.FILE_FORMAT_OWNER ;;
   }
 
   dimension: file_format_schema {
     type: string
-    sql: ${TABLE}."FILE_FORMAT_SCHEMA" ;;
-  }
-
-  dimension: file_format_schema_id {
-    type: number
-    sql: ${TABLE}."FILE_FORMAT_SCHEMA_ID" ;;
+    sql: ${TABLE}.FILE_FORMAT_SCHEMA ;;
   }
 
   dimension: file_format_type {
     type: string
-    sql: ${TABLE}."FILE_FORMAT_TYPE" ;;
+    sql: ${TABLE}.FILE_FORMAT_TYPE ;;
   }
 
   dimension_group: last_altered {
@@ -126,41 +110,41 @@ view: file_formats {
       quarter,
       year
     ]
-    sql: ${TABLE}."LAST_ALTERED" ;;
+    sql: ${TABLE}.LAST_ALTERED ;;
   }
 
   dimension: null_if {
     type: string
-    sql: ${TABLE}."NULL_IF" ;;
+    sql: ${TABLE}.NULL_IF ;;
   }
 
   dimension: record_delimiter {
     type: string
-    sql: ${TABLE}."RECORD_DELIMITER" ;;
+    sql: ${TABLE}.RECORD_DELIMITER ;;
   }
 
   dimension: skip_header {
     type: number
-    sql: ${TABLE}."SKIP_HEADER" ;;
+    sql: ${TABLE}.SKIP_HEADER ;;
   }
 
   dimension: time_format {
     type: string
-    sql: ${TABLE}."TIME_FORMAT" ;;
+    sql: ${TABLE}.TIME_FORMAT ;;
   }
 
   dimension: timestamp_format {
     type: string
-    sql: ${TABLE}."TIMESTAMP_FORMAT" ;;
+    sql: ${TABLE}.TIMESTAMP_FORMAT ;;
   }
 
   dimension: trim_space {
-    type: yesno
-    sql: ${TABLE}."TRIM_SPACE" ;;
+    type: string
+    sql: ${TABLE}.TRIM_SPACE ;;
   }
 
   measure: count {
     type: count
-    drill_fields: [file_format_id, file_format_name]
+    drill_fields: [file_format_name]
   }
 }
