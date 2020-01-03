@@ -58,7 +58,7 @@ view: warehouse_metering_history {
 
   dimension: is_prior_month_mtd {
     type: yesno
-    sql:  EXTRACT(month, ${start_raw}) = EXTRACT(month, current_timestamp()) - 1
+    sql:  EXTRACT(month, ${start_raw}) = EXTRACT(month, add_months(current_timestamp(), - 1))
       and ${start_raw} <= dateadd(month, -1, current_timestamp())  ;;
   }
 
